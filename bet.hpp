@@ -56,8 +56,22 @@
 	    		BinaryNode *t1;
 	    		BinaryNode *t2;
 
+	    		
+	    		if(s.empty())
+	    		{
+	    			cout << "The operator does not have corresponding operand. Building tree unsuccessful. Exiting..." << endl;
+	    			break;
+	    			
+	    		}
 	    		t1 = s.top();
 	    		s.pop();
+	    		
+	    		if(s.empty())
+	    		{
+	    			cout << "The operator does not have corresponding operand. Building tree unsuccessful. Exiting..." << endl;
+	    			break;
+	    			
+	    		}
 	    		t2 = s.top();
 	    		s.pop();
 
@@ -69,6 +83,8 @@
 	    //set the root
 	    root = s.top();	
 	    s.pop();
+	    if(!s.empty())
+	    	cout << "The operand does not have corresponding operator. Building tree unsuccessful." << endl;
 	}
 
 	//copy constructor
@@ -122,8 +138,21 @@
 	    		BinaryNode *t1;
 	    		BinaryNode *t2;
 
+	    		if(s.empty())
+	    		{
+	    			cout << "The operator does not have corresponding operand. Building tree unsuccessful. Exiting..." << endl;
+	    			success = false;
+	    			return success;
+	    		}
 	    		t1 = s.top();
 	    		s.pop();
+
+	    		if(s.empty())
+	    		{
+	    			cout << "The operator does not have corresponding operand. Building tree unsuccessful. Exiting..." << endl;
+	    			success = false;
+	    			return success;
+	    		}
 	    		t2 = s.top();
 	    		s.pop();
 
@@ -142,6 +171,11 @@
 	    //set the root
 	    root = s.top();	
 	    s.pop();
+	    if(!s.empty())
+	    {
+	    	cout << "The operand does not have corresponding operator. Building tree unsuccessful." << endl;
+	    	success = false;
+	    }
 	    return success;
     }
 
@@ -202,14 +236,18 @@
     {
     	if(n != nullptr)
     	{
-    		if(isOperator(n->element) && n != root)
+    		if(isOperator(n->element) && (n != root && !((root->element == "+" ||
+    			                                         root->element == "-") && 
+    			                                         (root->left != n || root->right != n))))
     		{
     			std::cout << "(" << " ";
     		}
     		printInfixExpression(n->left);
     		std::cout << n->element << " ";
     		printInfixExpression(n->right);
-    		if(isOperator(n->element)  && n != root)
+    		if(isOperator(n->element) && (n != root && !((root->element == "+" ||
+    			                                         root->element == "-") && 
+    			                                         (root->left != n || root->right != n))))
     		{
     			std::cout << ")" << " ";
     		}
